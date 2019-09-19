@@ -15,6 +15,9 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
 
+// 引入flexble 页面自适应工具之一
+import 'lib-flexible/flexible.js'
+
 import '@/assets/stylus/reset.styl'
 
 Vue.use(Meta);
