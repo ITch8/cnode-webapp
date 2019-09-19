@@ -1,8 +1,12 @@
 <template>
     <div>
-        <my-header />
-        <van-tabs sticky offset-top="46" color="#80bd01" background="#444444" title-inactive-color="#ffffff"
-            title-active-color="#80bd01">
+        <van-tabs
+            sticky
+            color="#80bd01"
+            background="#444444"
+            title-inactive-color="#ffffff"
+            title-active-color="#80bd01"
+        >
             <van-tab v-for="(tab,index) in tabs" :title="tab.title" :key="index">
                 <data-list />
             </van-tab>
@@ -13,7 +17,6 @@
 <script>
     function setState(store) {}
 
-    import MyHeader from '@/components/header.vue'
     import DataList from '@/components/datalist.vue'
     export default {
         name: 'index',
@@ -37,40 +40,33 @@
             setState(store);
         },
         components: {
-            MyHeader,
             DataList
         },
         data() {
             return {
                 tabs: [{
                         title: '全部',
-                        topic: 'all',
-                        dataList:[]
+                        topic: 'all'
                     },
                     {
                         title: '精华',
-                        topic: 'good',
-                        dataList:[]
+                        topic: 'good'
                     },
                     {
                         title: '分享',
-                        topic: 'share',
-                        dataList:[]
+                        topic: 'share'
                     },
                     {
                         title: '问答',
-                        topic: 'ask',
-                        dataList:[]
+                        topic: 'ask'
                     },
                     {
                         title: '招聘',
-                        topic: 'job',
-                        dataList:[]
+                        topic: 'job'
                     },
                     {
                         title: '测试',
-                        topic: 'test',
-                        dataList:[]
+                        topic: 'test'
                     }
                 ]
             }

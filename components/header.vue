@@ -3,7 +3,7 @@
       title="CNode"
       border
       fixed
-      z-index=10
+      z-index = 10
     />
 </template>
 
