@@ -27,7 +27,7 @@ module.exports = {
     },
     router: {
         mode: 'history',
-        base: '/',
+        base: '/cnode-webapp/',
         pageTransition: {
             type: 'fade',
             transitionClass: 'fade'

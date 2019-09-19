@@ -7,14 +7,14 @@
                     <div class="info">
                         <img :src="topic.author.avatar_url" alt="用户头像" class="user-avatar" />
                         <div class="content">
-                            <p>
+                            <p class="c-info">
                                 <span class="name">{{ topic.author.loginname }}</span>
                                 <span class="status">
                                     <b>{{ topic.reply_count }}</b>
                                     /{{ topic.visit_count }}
                                 </span>
                             </p>
-                            <p>{{ topic.title }}</p>
+                            <p class="t-content">{{ topic.title }}</p>
                             <p>
                                 <time>{{ topic.last_reply_at | formatDate }}</time>
                             </p>
@@ -80,13 +80,11 @@ export default {
                 // }
             });
         },
-        onRefresh(){
-            
-        }
+        onRefresh() {}
     },
     filters: {
         formatDate: function(value) {
-            return 1;
+            return '9/19';
         }
     }
 };
@@ -116,20 +114,25 @@ export default {
                 color #ffffff
                 font-weight 400
         .info
-            padding-top 10px
+            padding-top 5px
             display flex
             flex-direction row
-            .author-img
+            .user-avatar
                 margin-right 10px
+                width 40px
+                height 40px
+                border-radius 100%
             .content
                 flex 1
                 font-size 14px
+                padding-right 12px
             p
                 display inline-flex
                 width 100%
                 color #333333
             .name
                 flex 1
+                text-align justify
             span
                 font-size 12px
             b
@@ -137,4 +140,20 @@ export default {
                 flex 1
             time:first-of-type
                 flex 1
+                text-align right
+                font-size 12px
+            .t-content
+                margin 10px -5px 2px
+                text-align justify
+                overflow hidden
+                text-overflow ellipsis
+                display -webkit-box
+                -webkit-box-orient vertical
+                -webkit-line-clamp 2
+                font-size 12px
+                line-height 20px
+            .c-info
+                margin-top 12px
+
+
 </style>

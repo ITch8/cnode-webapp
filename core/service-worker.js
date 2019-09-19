@@ -29,6 +29,9 @@ self.addEventListener('message', event => {
 // workbox.routing.registerRoute(/^https:\/\/lavas\.baidu\.com\/some\/api/,
 //     workbox.strategies.networkFirst());
 
+workbox.routing.registerRoute(new RegExp('https://cnodejs.org/api/v1/topics'),
+    workbox.strategies.cacheFirst());
+// networkOnly, cacheFirst, cacheOnly, staleWhileRevalidate
 
 /**
  * example runningCache with resources from CDN

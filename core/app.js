@@ -15,6 +15,8 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
 
+import '@/assets/stylus/reset.styl'
+
 Vue.use(Meta);
 
 Vue.config.productionTip = false;
