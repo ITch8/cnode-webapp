@@ -5,7 +5,7 @@
                 <li class="topic-item" v-for="(topic, index) in dataList" :key="index">
                     <!-- <router-link :to="{ name: 'detail', params: {id : topic.id} }"> -->
                     <div class="info">
-                        <img :src="topic.author.avatar_url" alt="用户头像" class="user-avatar" />
+                        <img  v-lazy="topic.author.avatar_url" alt="用户头像" class="user-avatar" />
                         <div class="content">
                             <p class="c-info">
                                 <span class="name">{{ topic.author.loginname }}</span>
@@ -30,6 +30,13 @@
 <script>
 // import * as util from '@/util/utils.js'
 import api from '@/util/api.js';
+
+import Vue from 'vue';
+import { Lazyload } from 'vant';
+// options 为可选参数，无则不传
+Vue.use(Lazyload, {
+    loading:'static/img/default-person.png'
+});
 
 let page = 1;
 export default {

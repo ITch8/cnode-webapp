@@ -16,8 +16,7 @@ module.exports = {
         compress: true,
         path: BUILD_PATH,
         publicPath: '/',
-        ssrCopy: isDev ? [] : [
-            {
+        ssrCopy: isDev ? [] : [{
                 src: 'server.prod.js'
             },
             {
@@ -50,6 +49,11 @@ module.exports = {
 
         // URL of appshell page
         // ONLY works in SSR mode
-        appshellUrl: '/appshell'
+        appshellUrl: '/appshell',
+
+        //预缓存文件配置
+        globPatterns: [
+            '**/*.{html,js,css,eot,svg,ttf,woff}'
+        ]
     }
 };
