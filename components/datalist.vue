@@ -1,100 +1,56 @@
 <template title="数据列表组件">
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" :error.sync="error" error-text="请求失败，点击重新加载" @load="onLoad">
-            <ul class="topic-list">
-                <li class="topic-item" v-for="(topic, index) in dataList" :key="index">
-                    <!-- <router-link :to="{ name: 'detail', params: {id : topic.id} }"> -->
-                    <div class="info">
-                        <img  v-lazy="topic.author.avatar_url" alt="用户头像" class="user-avatar" />
-                        <div class="content">
-                            <p class="c-info">
-                                <span class="name">{{ topic.author.loginname }}</span>
-                                <span class="status">
-                                    <b>{{ topic.reply_count }}</b>
-                                    /{{ topic.visit_count }}
-                                </span>
-                            </p>
-                            <p class="t-content">{{ topic.title }}</p>
-                            <p>
-                                <time>{{ topic.last_reply_at | formatDate }}</time>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- </router-link> -->
-                </li>
-            </ul>
-        </van-list>
-    </van-pull-refresh>
+    <ul class="topic-list">
+        <li class="topic-item" v-for="(topic, index) in dataList" :key="index">
+            <!-- <router-link :to="{ name: 'detail', params: {id : topic.id} }"> -->
+            <div class="info">
+                <img v-lazy="topic.author.avatar_url" alt="用户头像" class="user-avatar" />
+                <div class="content">
+                    <p class="c-info">
+                        <span class="name">{{ topic.author.loginname }}</span>
+                        <span class="status">
+                            <b>{{ topic.reply_count }}</b>
+                            /{{ topic.visit_count }}
+                        </span>
+                    </p>
+                    <p class="t-content">{{ topic.title }}</p>
+                    <p><timeago :datetime="topic.last_reply_at" locale="zh-CN"></timeago></p>
+                </div>
+            </div>
+            <!-- </router-link> -->
+        </li>
+    </ul>
 </template>
 
 <script>
-// import * as util from '@/util/utils.js'
-import api from '@/util/api.js';
-
 import Vue from 'vue';
 import { Lazyload } from 'vant';
 // options 为可选参数，无则不传
 Vue.use(Lazyload, {
-    loading:'static/img/default-person.png',
-    error:'static/img/default-person.png'
+    loading: 'static/img/default-person.png',
+    error: 'static/img/default-person.png'
 });
 
-let page = 1;
+import VueTimeago from 'vue-timeago';
+Vue.use(VueTimeago, {
+    name: 'Timeago',
+    locale: 'en',
+    locales: {
+        'zh-CN': require('date-fns/locale/zh_cn'),
+        ja: require('date-fns/locale/ja')
+    }
+});
+
 export default {
     props: {
-        tab: {
-            type: String,
+        dataList: {
+            type: Array,
             default: null
         }
     },
     data() {
-        return {
-            dataList: [],
-            loading: false,
-            finished: false,
-            error: false,
-            refreshing: false
-        };
+        return {};
     },
-    methods: {
-        onLoad() {
-            console.log('onload.........');
-            this._getData();
-        },
-        _getData() {
-            console.log('_getData...........');
-            api.getData({
-                tab: 'good',
-                page: page,
-                limit: 10
-            }).then(res => {
-                console.log(res.data.success);
-                let data = [];
-                if (res.data.success) {
-                    page++;
-                    data = res.data.data || [];
-                    // this.finished = data.length < 10
-                    this.dataList = data;
-                    this.finished = true;
-                    console.log(this.dataList.length);
-                } else {
-                    data = [];
-                    this.error = true;
-                }
-                // if (page > 2) { //拼接下一页数据
-                //     this.dataList = this.dataList.concat(data)
-                // } else {
-                //     this.dataList = data
-                // }
-            });
-        },
-        onRefresh() {}
-    },
-    filters: {
-        formatDate: function(value) {
-            return '9/19';
-        }
-    }
+    methods: {}
 };
 </script>
 
@@ -144,7 +100,7 @@ export default {
             span
                 font-size 12px
             b
-                color #333333
+                color #6a911a
                 flex 1
             time:first-of-type
                 flex 1
@@ -162,6 +118,4 @@ export default {
                 line-height 20px
             .c-info
                 margin-top 12px
-
-
 </style>
