@@ -26,8 +26,8 @@ import Vue from 'vue';
 import { Lazyload } from 'vant';
 // options 为可选参数，无则不传
 Vue.use(Lazyload, {
-    loading: 'static/img/default-person.png',
-    error: 'static/img/default-person.png'
+    loading: require('@/static/img/default-person.png'),
+    error: require('@/static/img/default-person.png')
 });
 
 import VueTimeago from 'vue-timeago';

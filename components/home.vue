@@ -11,10 +11,11 @@
 </template>
 
 <script>
-    import api from '@/util/api.js';
+import api from '@/util/api.js';
 import DataList from '@/components/datalist.vue';
+import { Notify } from 'vant';
 
-let page = 1
+let page = 1;
 export default {
     components: {
         DataList
@@ -29,86 +30,98 @@ export default {
                 {
                     title: '全部',
                     topic: 'ask',
-                    dataList:[],
-                    page:1
+                    dataList: [],
+                    page: 1
                 },
                 {
                     title: '精华',
                     topic: 'good',
-                    dataList:[],
-                    page:1
+                    dataList: [],
+                    page: 1
                 },
                 {
                     title: '分享',
                     topic: 'share',
-                    dataList:[],
-                    page:1
+                    dataList: [],
+                    page: 1
                 },
                 {
                     title: '问答',
                     topic: 'ask',
-                    dataList:[],
-                    page:1
+                    dataList: [],
+                    page: 1
                 },
                 {
                     title: '招聘',
                     topic: 'job',
-                    dataList:[],
-                    page:1
+                    dataList: [],
+                    page: 1
                 },
                 {
                     title: '测试',
                     topic: 'share',
-                    dataList:[],
-                    page:1
+                    dataList: [],
+                    page: 1
                 }
             ],
             activeTopic: 0,
-            dataList:[]
+            dataList: []
         };
     },
     methods: {
         onLoad() {
-            this._getData()
+            this._getData();
         },
-        onChange(name,title){
-            this._getData()
+        onChange(name, title) {
+            this._getData();
         },
-        _getData() {
-            let tabTopic = this.tabs[this.activeTopic]//当前tab主题
+        _getData(isFresh) {
+            let tabTopic = this.tabs[this.activeTopic]; //当前tab主题
             api.getData({
                 tab: tabTopic.topic,
                 page: tabTopic.page,
                 limit: 10
             }).then(res => {
-                console.log(res.data.success)
                 let data = [];
                 if (res.data.success) {
                     data = res.data.data || [];
-                    this.finished = data.length < 10
-                    if(tabTopic.page == 1){
-                        this.tabs[this.activeTopic].dataList = data
-                    }else{
-                        this.tabs[this.activeTopic].dataList = this.tabs[this.activeTopic].dataList.concat(data)
+                    this.finished = data.length < 10;
+                    if (tabTopic.page == 1) {
+                        this.tabs[this.activeTopic].dataList = data;
+                    } else {
+                        this.tabs[this.activeTopic].dataList = this.tabs[this.activeTopic].dataList.concat(data);
                     }
-                    this.refreshing = false
-                    this.loading = false
-                    this.tabs[this.activeTopic].page++
+                    this.refreshing = false;
+                    this.loading = false;
+                    this.tabs[this.activeTopic].page++;
+                    if (isFresh) {
+                        this.$notify({
+                            message: '~已拿到最新数据~',
+                            type: 'success'
+                        });
+                    }
                 } else {
                     data = [];
-                     this.finished = true
-                    this.error = true
-                    this.refreshing = false
-                     this.loading = false
+                    this.finished = true;
+                    this.error = true;
+                    this.refreshing = false;
+                    this.loading = false;
                 }
-            });
+            }).catch(error=>{
+                console.log(error)
+                this.$router.replace({
+                    name: 'error',
+                    params: '请求数据异常'
+                })
+            })
         },
         onRefresh() {
-             this.tabs[this.activeTopic].page = 1
-            this._getData()
+            this.tabs[this.activeTopic].page = 1;
+            this._getData(true);
         }
     }
 };
 </script>
 
-<style></style>
+<style lang="stylus">
+</style>

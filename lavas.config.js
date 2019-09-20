@@ -55,5 +55,8 @@ module.exports = {
         globPatterns: [
             '**/*.{html,js,css,eot,svg,ttf,woff}'
         ]
+    },
+    errorHandler:{
+        errorPath: '/error'
     }
 };
