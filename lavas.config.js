@@ -22,25 +22,7 @@ module.exports = {
             {
                 src: 'package.json'
             }
-        ],
-        extendWithWebpackChain: (config, {
-            type,
-            env
-        }) => {
-            config.plugins.delete("no-emit-on-errors");
-            config.module
-                .rule("px2rem")
-                .test(/\.(vue|scss|css|styl)$/)
-                .use("webpack-px2rem")
-                .loader("webpack-px2rem-loader?min=9&floatWidth=2&basePx=32")
-                /*
-                   basePx:10 ,//1rm = npx 默认为10
-                   min:9 ,//只会转换大于min的px 默认为0 因为很小的px（比如border的1px）转化成rem后在很小的设备上结果会小于1px，有的设备就会不显示
-                   floatWidth:3  //转化后的rem值保留的小数点后位数 默认为3
-                */
-                .end()
-                .exclude.add(/node_modules/);
-        }
+        ]
     },
     router: {
         mode: 'history',
